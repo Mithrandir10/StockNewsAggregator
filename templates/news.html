@@ -1,0 +1,142 @@
+{% load index %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>News aggregator</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <style>
+        .properties {
+            background-color: #e9ecef;
+            border: 1px solid #e9ecef;
+            border-radius: 5px;
+            margin-bottom: 25px;
+            padding: 25px;
+        }
+
+        .li-style {
+            box-sizing: border-box;
+            padding: 2px;
+        }
+
+        .ul-style {
+            display: flex;
+            padding-left: 500px;
+            list-style: none;
+            border-radius: .25rem;
+            font-size: 20px;
+        }
+
+        .btn-rounded {
+            color: black;
+            border: 2px solid;
+        }
+
+        .page-footer {
+            background-color: #e9ecef;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="jumbotron">
+        <center>
+            <h1>News aggregator</h1>
+            <a href="{% url 'news-api' %}" class="btn btn-success" target="_blank">Get API</a>
+            
+            <form action="{% url 'news' %}" method="POST">{% csrf_token %}
+            <button type="submit" class="btn btn-submit">Refresh News</button>
+            </form>
+        </center>
+    </div>
+    <div class="container">
+        <div class="row">
+
+            {%for item in news%}
+            <div class="col-12 properties">
+                <h4>{{item.title}}</h4>
+                <p>{{item.description}}</p>
+                <p>{{item.pubdate}}</p>
+                <p><a href="{{item.link}}" target="_blank">CLICK TO VIEW THE ARTICLE</a></p>
+            </div>
+            {% endfor %}
+
+            <div class="pagination-div">
+                {% if news.has_other_pages %}
+                <ul class="pagination ul-style">
+                    {% if news.has_previous %}
+                    <li class="li-style"><a href="?page={{ news.previous_page_number }}">&laquo;</a></li>
+                    {% else %}
+                    <li class="disabled li-style"><span>&laquo;</span></li>
+                    {% endif %}
+                    {% for i in news.paginator.page_range %}
+                    {% if news.number == i %}
+                    <li class="active li-style"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+                    {% else %}
+                    <li class="li-style"><a href="?page={{ i }}">{{ i }}</a></li>
+                    {% endif %}
+                    {% endfor %}
+                    {% if news.has_next %}
+                    <li class="li-style"><a href="?page={{ news.next_page_number }}">&raquo;</a></li>
+                    {% else %}
+                    <li class="disabled li-style"><span>&raquo;</span></li>
+                    {% endif %}
+                </ul>
+                {% endif %}
+            </div>
+            <!-- {%for tit in rows%}
+            <div class="col-12 properties">
+                <h5> {{forloop.counter}}- {{tit|index:0}} </h5>
+                <p><b>Description:</b>{{tit|index:1}}</p>
+                <p><b>link:</b>{{tit|index:2}}</p>
+                <p><b>guid:</b>{{tit|index:3}}</p>
+                <p><b>pubdate:</b>{{tit|index:4}}</p>
+            </div>
+            {% endfor %} -->
+
+        </div>
+
+
+    </div>
+    <!-- Footer -->
+    <footer class="page-footer font-small unique-color-dark pt-4">
+
+        <!-- Footer Elements -->
+        <div class="container">
+
+            <!-- Call to action -->
+            <ul class="list-unstyled list-inline text-center py-2">
+                <li class="list-inline-item">
+                    <h5 class="mb-1">Click here to get API</h5>
+                </li>
+                <li class="list-inline-item">
+                    <a href="{% url 'news-api' %}" class="btn btn-outline-white btn-rounded" target="_blank">API</a>
+                </li>
+            </ul>
+            <!-- Call to action -->
+
+        </div>
+        <!-- Footer Elements -->
+
+        <!-- Copyright -->
+        <div class="footer-copyright text-center py-3">Indian Stocks Newfeed
+            <br><a href="#"> Made by Parteekpal Singh</a>
+        </div>
+        <!-- Copyright -->
+
+    </footer>
+    <!-- Footer -->
+
+    <script src="http://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
