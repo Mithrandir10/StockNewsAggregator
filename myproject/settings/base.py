@@ -4,7 +4,7 @@ from decouple import config
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-SECRET_KEY = config('SECRET_KEY')
+SECRET_KEY = 'parteek@barca'
 ALLOWED_HOSTS = ['calm-escarpment-76155.herokuapp.com','127.0.0.1']
 
 INSTALLED_APPS = [

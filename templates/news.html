@@ -43,15 +43,15 @@
 <body>
     <div class="jumbotron">
         <center>
-            <h1>News aggregator</h1>
+            <h1>Stock News Aggregator</h1>
             <a href="{% url 'news-api' %}" class="btn btn-success" target="_blank">Get API</a>
             
             <form action="{% url 'news' %}" method="POST">{% csrf_token %}
-            <button type="submit" class="btn btn-submit">Refresh News</button>
+            <button type="submit" class="btn btn-primary">Refresh News</button>
             </form>
         </center>
     </div>
-    <div class="container">
+    <div class="container-lg">
         <div class="row">
 
             {%for item in news%}
